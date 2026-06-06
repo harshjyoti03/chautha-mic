@@ -2,12 +2,9 @@ from fastapi import FastAPI
 import json
 
 from backend.search_episode import search_episodes
+from backend.related_episode import get_related_episodes
 
 app = FastAPI()
-
-from backend.related_episode import (
-    get_related_episodes
-)
 
 # =========================
 # LOAD EPISODE INDEX
@@ -99,28 +96,53 @@ def get_episode(
             "error": "Episode not found"
         }
 
-    data = episode_index[episode_id]
+    metadata = episode_index[episode_id]
+
+    transcript_path = metadata["path"]
+
+    with open(
+        transcript_path,
+        "r",
+        encoding="utf-8"
+    ) as f:
+
+        transcript = json.load(f)
+
+    text = transcript["text"]
 
     return {
 
-        "episode_id": episode_id,
+        "episode_id":
+            episode_id,
 
-        "title": data["title"],
+        "title":
+            metadata["title"],
 
-        "season": data["season"],
+        "season":
+            metadata["season"],
 
-        "episode": data["episode"],
+        "episode":
+            metadata["episode"],
 
-        "part": data["part"],
+        "part":
+            metadata["part"],
 
-        "bonus": data["bonus"],
+        "bonus":
+            metadata["bonus"],
 
-        "word_count": data["word_count"],
+        "word_count":
+            metadata["word_count"],
 
-        "preview": data["text"][:1000],
+        "preview":
+            text[:1000],
 
-        "text": data["text"]
+        "text":
+            text
     }
+
+# =========================
+# RELATED EPISODES
+# =========================
 
 @app.get("/related/{episode_id}")
 def related(
