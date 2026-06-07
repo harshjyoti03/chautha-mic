@@ -1,28 +1,23 @@
-import os
-
-import google.generativeai as genai
-
-from dotenv import load_dotenv
-
-load_dotenv()
-
-genai.configure(
-    api_key=os.getenv("GEMINI_API_KEY")
-)
-
-model = genai.GenerativeModel(
-    "gemini-2.5-flash"
-)
-
-
 def ask_gemini(prompt: str):
 
-    response = model.generate_content(
-        prompt
-    )
+    try:
 
-    return {
-        "provider": "google",
-        "model": "gemini-2.5-flash",
-        "answer": response.text
-    }
+        response = model.generate_content(
+            prompt
+        )
+
+        return {
+            "provider": "google",
+            "model": "gemini-2.5-flash",
+            "answer": response.text
+        }
+
+    except Exception as e:
+
+        return {
+            "provider": "google",
+            "model": "gemini-2.5-flash",
+            "error": str(e),
+            "answer":
+                "LLM temporarily unavailable."
+        }

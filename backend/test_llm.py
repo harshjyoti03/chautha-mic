@@ -1,7 +1,7 @@
 from backend.ask import ask
 
 result = ask(
-    "Trump ke baare mein Teen Taal ne kya kaha, aur uske nick name kya diya gaya hai?"
+    "Nitish Kumar ke baare mein Teen Taal ne kya kaha?"
 )
 
 print()
