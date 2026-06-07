@@ -1,7 +1,7 @@
 from backend.ask import ask
 
 result = ask(
-    "Mirzapur"
+    "Bihar Election"
 )
 
 print()

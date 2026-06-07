@@ -14,6 +14,10 @@ from backend.source_builder import (
     build_sources
 )
 
+from backend.llm_adapter import (
+    generate_answer
+)
+
 
 def ask(
     question,
@@ -22,7 +26,7 @@ def ask(
 ):
 
     # =====================
-    # RETRIEVE CHUNKS
+    # CHUNK RETRIEVAL
     # =====================
 
     chunks = search_chunks(
@@ -31,7 +35,7 @@ def ask(
     )
 
     # =====================
-    # BUILD SOURCES
+    # SOURCES
     # =====================
 
     sources = build_sources(
@@ -39,7 +43,7 @@ def ask(
     )
 
     # =====================
-    # BUILD CONTEXT
+    # CONTEXT
     # =====================
 
     context = build_context(
@@ -48,7 +52,7 @@ def ask(
     )
 
     # =====================
-    # BUILD PROMPT
+    # PROMPT
     # =====================
 
     prompt = build_prompt(
@@ -57,7 +61,15 @@ def ask(
     )
 
     # =====================
-    # RETURN PIPELINE DATA
+    # ANSWER
+    # =====================
+
+    answer = generate_answer(
+        prompt
+    )
+
+    # =====================
+    # RESPONSE
     # =====================
 
     return {
@@ -65,11 +77,14 @@ def ask(
         "question":
             question,
 
-        "chunks":
-            chunks,
+        "answer":
+            answer,
 
         "sources":
             sources,
+
+        "chunks":
+            chunks,
 
         "context":
             context,

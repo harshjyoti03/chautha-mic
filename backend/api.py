@@ -8,6 +8,8 @@ from backend.evidence import (
     get_evidence
 )
 
+from backend.ask import ask
+
 app = FastAPI()
 
 # =========================
@@ -183,3 +185,12 @@ def evidence(
         "chunks":
             chunks
     }
+
+@app.get("/ask")
+def ask_question(
+    query: str
+):
+
+    return ask(
+        query
+    )
