@@ -1,15 +1,10 @@
-def generate_answer(
-    prompt
-):
+from backend.gemini_adapter import (
+    ask_gemini
+)
 
-    return {
 
-        "provider":
-            "mock",
+def generate_answer(prompt: str):
 
-        "model":
-            "mock-llm",
-
-        "answer":
-            "LLM integration pending."
-    }
+    return ask_gemini(
+        prompt
+    )
