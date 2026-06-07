@@ -4,6 +4,10 @@ import json
 from backend.search_episode import search_episodes
 from backend.related_episode import get_related_episodes
 
+from backend.evidence import (
+    get_evidence
+)
+
 app = FastAPI()
 
 # =========================
@@ -160,4 +164,22 @@ def related(
 
         "related":
             results
+    }
+
+@app.get("/evidence")
+def evidence(
+    query: str
+):
+
+    chunks = get_evidence(
+        query
+    )
+
+    return {
+
+        "query":
+            query,
+
+        "chunks":
+            chunks
     }
